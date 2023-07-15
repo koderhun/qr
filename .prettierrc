@@ -9,5 +9,7 @@
   "trailingComma": "all",
   "bracketSpacing": false,
   "arrowParens": "always",
-  "endOfLine": "auto"
+  "endOfLine": "auto",
+  "bracketSameLine": false,
+  "singleAttributePerLine": true
 }
