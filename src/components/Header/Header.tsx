@@ -9,24 +9,27 @@ type Props = {}
 const Header = (props: Props) => {
   return (
     <AppBar
+      className={s.header}
       position='static'
       color='default'
       elevation={0}
       sx={{borderBottom: (theme) => `1px solid ${theme.palette.divider}`}}
     >
-      <Toolbar sx={{flexWrap: 'wrap'}}>
-        <Grid sx={{flexGrow: 1}}>
-          <Logo />
+      <Toolbar sx={{pl: 1, pr: 1}}>
+        <Grid container direction='row' justifyContent='space-between' alignItems='center'>
+          <Grid item sx={{flexGrow: 1}}>
+            <Logo />
+          </Grid>
+          <Grid item>
+            <Button // MUI Button
+              href='/about'
+              component='a'
+              LinkComponent={NextLink} // NextJS Link
+            >
+              About
+            </Button>
+          </Grid>
         </Grid>
-        <Box>
-          <Button // MUI Button
-            href='/about'
-            component='a'
-            LinkComponent={NextLink} // NextJS Link
-          >
-            About
-          </Button>
-        </Box>
       </Toolbar>
     </AppBar>
   )
