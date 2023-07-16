@@ -67,7 +67,7 @@ export default function VerticalTabs() {
 
       <Grid item xs={8} sm={10}>
         <TabPanel value={value} index={0}>
-          <Card>
+          <Card sx={{p: 2}}>
             <TextQr />
           </Card>
         </TabPanel>
