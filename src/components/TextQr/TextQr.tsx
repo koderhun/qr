@@ -2,7 +2,7 @@ import {FC, useState, useCallback} from 'react'
 import s from './styles.module.scss'
 import getQRCode from '@/utils/getQRCode'
 import {generate as shortid} from 'shortid'
-import {Typography, Box, TextField} from '@mui/material'
+import {Typography, Box, TextField, Grid} from '@mui/material'
 
 interface TextQrProps {}
 
@@ -25,20 +25,26 @@ const TextQr: FC<TextQrProps> = ({}) => {
   }, [qr])
 
   return (
-    <div className={s.container}>
+    <>
       <Typography variant='h5' align='center' sx={{pb: 2}}>
         Text QR Generator
       </Typography>
-      <Box>
-        <TextField fullWidth label='Текст' id='text' value={value} onChange={onChangeText} />
-      </Box>
+      <Grid container columnSpacing={2} className={s.container}>
+        <Grid item xs={12} sm={6}>
+          <Box>
+            <TextField fullWidth label='Текст' id='text' value={value} onChange={onChangeText} />
+          </Box>
+        </Grid>
 
-      {qr && (
-        <Box sx={{pt: 2}}>
-          <img src={qr} />
-        </Box>
-      )}
-    </div>
+        <Grid item xs={12} sm={6}>
+          <Box sx={{pt: 2, pb: 2}} className={s.wrapper}>
+            <div className={s.qrcodeContainer}>
+              {qr && <img className={s.qrcode} src={qr} alt='QR Code' />}
+            </div>
+          </Box>
+        </Grid>
+      </Grid>
+    </>
   )
 }
 

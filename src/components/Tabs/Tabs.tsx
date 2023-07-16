@@ -14,15 +14,21 @@ function TabPanel(props: TabPanelProps) {
   const {children, value, index, ...other} = props
 
   return (
-    <div
+    <Box
+      sx={{pt: 2}}
       role='tabpanel'
       hidden={value !== index}
       id={`vertical-tabpanel-${index}`}
       aria-labelledby={`vertical-tab-${index}`}
+      className={s.cardContainer}
       {...other}
     >
-      {value === index && <Box sx={{p: 2, pt: 3}}>{children}</Box>}
-    </div>
+      {value === index && (
+        <Card sx={{p: 2}} className={s.card}>
+          {children}
+        </Card>
+      )}
+    </Box>
   )
 }
 
@@ -67,9 +73,7 @@ export default function VerticalTabs() {
 
       <Grid item xs={8} sm={10}>
         <TabPanel value={value} index={0}>
-          <Card sx={{p: 2}}>
-            <TextQr />
-          </Card>
+          <TextQr />
         </TabPanel>
         <TabPanel value={value} index={1}>
           Item Two

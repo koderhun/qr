@@ -13,7 +13,7 @@
   "cSpell.language": "en,ru",
 
   // Дополнительный словарь для Code Spell Checker
-  "cSpell.words": ["antd", "reduxjs"],
+  "cSpell.words": ["antd", "qrcode", "reduxjs"],
 
   // Использование одной темы в проекте)
   "workbench.colorTheme": "One Dark Pro",
