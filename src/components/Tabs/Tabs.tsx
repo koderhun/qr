@@ -3,6 +3,7 @@ import {Grid, Box, Typography, Tab, Tabs, Card} from '@mui/material'
 import TextQr from '@/components/TextQr/TextQr'
 
 import s from './styles.module.scss'
+import WifiQr from '../WifiQr/WifiQr'
 
 interface TabPanelProps {
   children?: React.ReactNode
@@ -72,11 +73,11 @@ export default function VerticalTabs() {
       </Grid>
 
       <Grid item xs={8} sm={10}>
-        <TabPanel value={value} index={0}>
+        <TabPanel value={value} index={1}>
           <TextQr />
         </TabPanel>
-        <TabPanel value={value} index={1}>
-          Item Two
+        <TabPanel value={value} index={0}>
+          <WifiQr />
         </TabPanel>
       </Grid>
     </Grid>
