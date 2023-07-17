@@ -3,7 +3,7 @@ import type {QRCodeToDataURLOptions} from 'qrcode'
 
 const options: QRCodeToDataURLOptions = {
   width: 400,
-  margin: 2,
+  margin: 0,
 }
 
 const getQRCode = (value: string): string => {

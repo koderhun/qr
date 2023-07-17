@@ -1,6 +1,8 @@
 :root {
   --bg-color: #fff;
   --text-color: #000;
+  --bg-light: #f3f6f9;
+
   --header-height: 65px;
   --body-height: calc(100vh - 65px);
 }
@@ -9,6 +11,7 @@
   :root {
     --bg-color: #000;
     --text-color: #fff;
+    --bg-light: #f3f6f9;
   }
 }
 
@@ -19,7 +22,7 @@
 }
 
 body {
-  background-color: var(--bg-color);
+  background-color: var(--bg-light);
   color: var(--text-color);
 }
 

@@ -1,13 +1,30 @@
-import Tabs from '@/components/Tabs/Tabs'
+import {useState} from 'react'
+import QrCodeLayout from '@/components/QrCodeLayout/QrCodeLayout'
+import {TextField} from '@mui/material'
 import s from './styles.module.scss'
 
 type Props = {}
 
 const Home = (props: Props) => {
+  const [value, setValue] = useState('')
+
+  const onChangeText = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value)
+  }
+
   return (
-    <div className={s.container}>
-      <Tabs />
-    </div>
+    <>
+      <QrCodeLayout qrCodeText={value}>
+        <TextField
+          variant='filled'
+          fullWidth
+          label='Текст'
+          id='text'
+          value={value}
+          onChange={onChangeText}
+        />
+      </QrCodeLayout>
+    </>
   )
 }
 

@@ -6,7 +6,7 @@ import createEmotionCache from '@/utils/createEmotionCache'
 import {EmotionCache} from '@emotion/cache'
 import lightTheme from '@/styles/theme/lightTheme'
 import {Roboto} from 'next/font/google'
-import '@/styles/globals.css'
+import '@/styles/globals.scss'
 import Layout from '@/components/Layout/Layout'
 
 const clientSideEmotionCache = createEmotionCache()
