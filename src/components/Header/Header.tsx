@@ -21,6 +21,13 @@ const Header = (props: Props) => {
             <Logo />
           </Grid>
           <Grid item>
+            <Button
+              href='/wifi'
+              component='a'
+              LinkComponent={NextLink} // NextJS Link
+            >
+              Wifi
+            </Button>
             <Button // MUI Button
               href='/about'
               component='a'
