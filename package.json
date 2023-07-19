@@ -13,7 +13,9 @@
     "@emotion/react": "^11.11.1",
     "@emotion/server": "^11.11.0",
     "@emotion/styled": "^11.11.0",
+    "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.14.0",
+    "@mui/lab": "^5.0.0-alpha.136",
     "@mui/material": "^5.14.0",
     "@types/node": "20.4.2",
     "@types/qrcode": "^1.5.1",
@@ -26,7 +28,8 @@
     "react-dom": "18.2.0",
     "react-hook-form": "^7.45.2",
     "shortid": "^2.2.16",
-    "typescript": "5.1.6"
+    "typescript": "5.1.6",
+    "zod": "^3.21.4"
   },
   "devDependencies": {
     "sass": "^1.63.6"

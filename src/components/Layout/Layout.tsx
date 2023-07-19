@@ -1,5 +1,6 @@
 import React, {ReactNode} from 'react'
 import Head from 'next/head'
+import {Container} from '@mui/material'
 import Header from '@/components/Header/Header'
 import s from './styles.module.scss'
 
@@ -14,7 +15,9 @@ const Layout = ({children}: Props) => {
         <title>QR-Generator</title>
       </Head>
       <Header />
-      <div className={s.content}>{children}</div>
+      <Container maxWidth='md' className={s.content}>
+        {children}
+      </Container>
     </div>
   )
 }

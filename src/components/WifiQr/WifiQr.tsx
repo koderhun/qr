@@ -12,9 +12,20 @@ import {
   Button,
   TextField,
 } from '@mui/material'
+import {zodResolver} from '@hookform/resolvers/zod'
+import {TypeOf, object, string} from 'zod'
 import s from './styles.module.scss'
 
 type Props = {}
+
+const inputsSchema = object({
+  pass: string(),
+  crypt: string(),
+  ssid: string().nonempty('Обязательно нужно название').max(32, 'Длинна не больше 32 символов'),
+}).refine((data) => {
+  console.log('refine ', data)
+  return true
+})
 
 type wifiProps = {
   ssid: string
@@ -23,19 +34,14 @@ type wifiProps = {
   hidden?: string
 }
 
-type formInputsType = {
-  ssid: string
-  crypt?: string
-  pass?: string
-}
-
+type formInputsType = TypeOf<typeof inputsSchema>
 const wifiTemplateString = ({ssid, pass = '', crypt = '', hidden = ''}: wifiProps) => {
   return `WIFI:S:${ssid};T:${crypt};P:${pass};${hidden};`
 }
 
 const WifiQr = (props: Props) => {
   const [qrCodeText, setQrCodeText] = useState('')
-  const {control, handleSubmit} = useForm<formInputsType>()
+  const {control, handleSubmit, watch, formState} = useForm<formInputsType>()
 
   const onSubmit = (data: formInputsType) => {
     const wifiStr: wifiProps = {
@@ -49,6 +55,10 @@ const WifiQr = (props: Props) => {
     console.log('wifi: ', wifiQrStr)
     setQrCodeText(wifiQrStr)
   }
+
+  const cryptValue = watch('crypt') || ''
+  const {errors} = formState
+  console.log('control', errors)
 
   return (
     <>
@@ -70,24 +80,28 @@ const WifiQr = (props: Props) => {
               />
             )}
           />
-          <Controller
-            name='pass'
-            control={control}
-            defaultValue=''
-            render={({field}) => (
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Password'
-                id='pass'
-                autoComplete='current-password'
-                {...field}
-              />
-            )}
-          />
+          {cryptValue !== '' && (
+            <Controller
+              name='pass'
+              control={control}
+              defaultValue=''
+              render={({field}) => (
+                <TextField
+                  margin='normal'
+                  fullWidth
+                  label='Password'
+                  id='pass'
+                  autoComplete='current-password'
+                  {...field}
+                />
+              )}
+            />
+          )}
 
-          <FormControl>
-            <FormLabel id='crypt'>Encryption</FormLabel>
+          <FormControl sx={{pt: 2}} className={s.radioGroup}>
+            <FormLabel id='crypt' className={s.radioGroupLabel}>
+              Encryption
+            </FormLabel>
             <Controller
               control={control}
               name='crypt'
