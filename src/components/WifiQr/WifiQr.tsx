@@ -1,6 +1,6 @@
 import {useState} from 'react'
 import QrCodeLayout from '@/components/QrCodeLayout/QrCodeLayout'
-import {useForm, Controller} from 'react-hook-form'
+import {useForm, SubmitHandler} from 'react-hook-form'
 import {
   Box,
   FormControl,
@@ -8,12 +8,15 @@ import {
   RadioGroup,
   FormControlLabel,
   Radio,
-  Grid,
   Button,
   TextField,
+  Typography,
+  FormGroup,
+  FormHelperText,
 } from '@mui/material'
+import {LoadingButton} from '@mui/lab'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {TypeOf, object, string} from 'zod'
+import {TypeOf, object, string, literal} from 'zod'
 import s from './styles.module.scss'
 
 type Props = {}
@@ -35,13 +38,22 @@ type wifiProps = {
 }
 
 type formInputsType = TypeOf<typeof inputsSchema>
+
 const wifiTemplateString = ({ssid, pass = '', crypt = '', hidden = ''}: wifiProps) => {
   return `WIFI:S:${ssid};T:${crypt};P:${pass};${hidden};`
 }
 
 const WifiQr = (props: Props) => {
+  const [isLoading, setIsLoading] = useState(false)
   const [qrCodeText, setQrCodeText] = useState('')
-  const {control, handleSubmit, watch, formState} = useForm<formInputsType>()
+  const {
+    register,
+    formState: {errors, isSubmitSuccessful},
+    reset,
+    handleSubmit,
+  } = useForm<formInputsType>({
+    resolver: zodResolver(inputsSchema),
+  })
 
   const onSubmit = (data: formInputsType) => {
     const wifiStr: wifiProps = {
@@ -56,68 +68,70 @@ const WifiQr = (props: Props) => {
     setQrCodeText(wifiQrStr)
   }
 
-  const cryptValue = watch('crypt') || ''
-  const {errors} = formState
-  console.log('control', errors)
+  const onSubmitHandler: SubmitHandler<formInputsType> = ({ssid, pass, crypt}) => {
+    const wifiStr: wifiProps = {
+      ssid,
+      pass,
+      crypt,
+      hidden: '',
+    }
+
+    const wifiQrStr = wifiTemplateString(wifiStr)
+    console.log('wifi: ', wifiQrStr)
+    setQrCodeText(wifiQrStr)
+  }
+  console.log(errors)
 
   return (
     <>
       <QrCodeLayout qrCodeText={qrCodeText}>
-        <Box component='form' onSubmit={handleSubmit(onSubmit)} noValidate sx={{mt: 0}}>
-          <Controller
-            name='ssid'
-            control={control}
-            defaultValue=''
-            render={({field}) => (
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Network Name'
-                autoComplete='Input "ssid" name wifi network'
-                autoFocus
-                sx={{mt: 0}}
-                {...field}
-              />
-            )}
+        <Box
+          component='form'
+          autoComplete='off'
+          onSubmit={handleSubmit(onSubmit)}
+          noValidate
+          sx={{mt: 0}}
+        >
+          <TextField
+            sx={{mb: 2}}
+            label='Network Name'
+            fullWidth
+            required
+            error={!!errors['ssid']}
+            helperText={errors['ssid'] ? errors['ssid'].message : ''}
+            {...register('ssid')}
           />
-          {cryptValue !== '' && (
-            <Controller
-              name='pass'
-              control={control}
-              defaultValue=''
-              render={({field}) => (
-                <TextField
-                  margin='normal'
-                  fullWidth
-                  label='Password'
-                  id='pass'
-                  autoComplete='current-password'
-                  {...field}
-                />
-              )}
-            />
-          )}
 
-          <FormControl sx={{pt: 2}} className={s.radioGroup}>
-            <FormLabel id='crypt' className={s.radioGroupLabel}>
-              Encryption
-            </FormLabel>
-            <Controller
-              control={control}
-              name='crypt'
-              defaultValue=''
-              render={({field}) => (
-                <RadioGroup {...field}>
-                  <FormControlLabel value='' control={<Radio />} label='None' />
-                  <FormControlLabel value='WPA' control={<Radio />} label='WPA/WPA2' />
-                  <FormControlLabel value='WEP' control={<Radio />} label='WEP' />
-                </RadioGroup>
-              )}
-            />
+          <TextField
+            sx={{mb: 2}}
+            label='Password'
+            fullWidth
+            error={!!errors['pass']}
+            helperText={errors['pass'] ? errors['pass'].message : ''}
+            {...register('pass')}
+          />
+
+          <FormControl sx={{pt: 2}}>
+            <FormLabel>Gender</FormLabel>
+            <RadioGroup {...register('crypt')} name='crypt' defaultValue={''}>
+              <FormControlLabel value='' control={<Radio />} label='None' />
+              <FormControlLabel value='WPA' control={<Radio />} label='WPA/WPA2' />
+              <FormControlLabel value='WEP' control={<Radio />} label='WEP' />
+            </RadioGroup>
+            <FormHelperText error={!!errors['crypt']}>
+              {errors['crypt'] ? errors['crypt'].message : ''}
+            </FormHelperText>
           </FormControl>
-          <Button type='submit' fullWidth variant='contained' sx={{mt: 3, mb: 2}}>
+
+          <LoadingButton
+            loading={isLoading}
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{mt: 3, mb: 2}}
+          >
             Generate
-          </Button>
+          </LoadingButton>
         </Box>
       </QrCodeLayout>
     </>
