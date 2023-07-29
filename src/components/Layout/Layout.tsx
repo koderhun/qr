@@ -1,4 +1,4 @@
-import React, {ReactNode} from 'react'
+import React, {ReactNode, Suspense} from 'react'
 import Head from 'next/head'
 import {Container} from '@mui/material'
 import Header from '@/components/Header/Header'
@@ -16,7 +16,7 @@ const Layout = ({children}: Props) => {
       </Head>
       <Header />
       <Container maxWidth='md' className={s.content}>
-        {children}
+        <Suspense fallback={<p>Loading feed...</p>}>{children}</Suspense>
       </Container>
     </div>
   )

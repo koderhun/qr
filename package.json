@@ -15,7 +15,6 @@
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.1",
     "@mui/icons-material": "^5.14.0",
-    "@mui/lab": "^5.0.0-alpha.136",
     "@mui/material": "^5.14.0",
     "@types/node": "20.4.2",
     "@types/qrcode": "^1.5.1",

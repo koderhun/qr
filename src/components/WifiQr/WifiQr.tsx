@@ -14,7 +14,6 @@ import {
   FormGroup,
   FormHelperText,
 } from '@mui/material'
-import {LoadingButton} from '@mui/lab'
 import {zodResolver} from '@hookform/resolvers/zod'
 import {TypeOf, object, string, literal} from 'zod'
 import s from './styles.module.scss'
@@ -44,7 +43,6 @@ const wifiTemplateString = ({ssid, pass = '', crypt = '', hidden = ''}: wifiProp
 }
 
 const WifiQr = (props: Props) => {
-  const [isLoading, setIsLoading] = useState(false)
   const [qrCodeText, setQrCodeText] = useState('')
   const {
     register,
@@ -123,15 +121,9 @@ const WifiQr = (props: Props) => {
             </FormHelperText>
           </FormControl>
 
-          <LoadingButton
-            loading={isLoading}
-            type='submit'
-            fullWidth
-            variant='contained'
-            sx={{mt: 3, mb: 2}}
-          >
+          <Button type='submit' fullWidth variant='contained' sx={{mt: 3, mb: 2}}>
             Generate
-          </LoadingButton>
+          </Button>
         </Box>
       </QrCodeLayout>
     </>

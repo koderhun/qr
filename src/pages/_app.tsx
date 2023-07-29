@@ -8,6 +8,7 @@ import lightTheme from '@/styles/theme/lightTheme'
 import {Roboto} from 'next/font/google'
 import '@/styles/globals.scss'
 import Layout from '@/components/Layout/Layout'
+import {useLoading} from '@/hooks/useLoading'
 
 const clientSideEmotionCache = createEmotionCache()
 
@@ -19,6 +20,7 @@ const font = Roboto({weight: '400', subsets: ['cyrillic']})
 
 export default (props: MyAppProps) => {
   const {Component, emotionCache = clientSideEmotionCache, pageProps} = props
+  const isLoading = useLoading()
 
   return (
     <CacheProvider value={emotionCache}>
@@ -26,6 +28,7 @@ export default (props: MyAppProps) => {
         <CssBaseline />
         <main className={font.className}>
           <Layout>{<Component {...pageProps} />}</Layout>
+          {isLoading && <div className='loader'>Loading...</div>}
         </main>
       </ThemeProvider>
     </CacheProvider>
