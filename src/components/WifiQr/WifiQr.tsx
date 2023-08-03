@@ -1,84 +1,81 @@
-import {useState} from 'react'
+import {useEffect, useState} from 'react'
 import QrCodeLayout from '@/components/QrCodeLayout/QrCodeLayout'
-import {useForm, SubmitHandler} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 import {
   Box,
   FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  Radio,
   Button,
   TextField,
-  Typography,
-  FormGroup,
+  Autocomplete,
   FormHelperText,
 } from '@mui/material'
 import {zodResolver} from '@hookform/resolvers/zod'
-import {TypeOf, object, string, literal} from 'zod'
+import {z} from 'zod'
 import s from './styles.module.scss'
 
-type Props = {}
+const wifiNameSchema = z
+  .string()
+  .transform((value) => value.replace(/\D/gu, ''))
+  .refine((val) => val.length > 10, 'Название не может быть больше 10 символов')
+  .refine((val) => val.startsWith('04'), 'Название не может содержать "04"')
 
-const inputsSchema = object({
-  pass: string(),
-  crypt: string(),
-  ssid: string().nonempty('Обязательно нужно название').max(32, 'Длинна не больше 32 символов'),
-}).refine((data) => {
-  console.log('refine ', data)
-  return true
-})
+const cryptMethod = ['None', 'WPA', 'WEP'] as const
 
-type wifiProps = {
-  ssid: string
-  pass?: string
-  crypt?: string
-  hidden?: string
-}
+const looseOptional = <T extends z.ZodTypeAny>(schema: T) =>
+  z.preprocess(
+    (value: unknown) =>
+      value === null || (typeof value === 'string' && value === '')
+        ? undefined
+        : value,
+    schema.optional(),
+  )
 
-type formInputsType = TypeOf<typeof inputsSchema>
-
-const wifiTemplateString = ({ssid, pass = '', crypt = '', hidden = ''}: wifiProps) => {
-  return `WIFI:S:${ssid};T:${crypt};P:${pass};${hidden};`
-}
-
-const WifiQr = (props: Props) => {
-  const [qrCodeText, setQrCodeText] = useState('')
-  const {
-    register,
-    formState: {errors, isSubmitSuccessful},
-    reset,
-    handleSubmit,
-  } = useForm<formInputsType>({
-    resolver: zodResolver(inputsSchema),
+const formSchema = z
+  .object({
+    ssid: looseOptional(
+      z.string().nonempty('Название точки доступа не может быть пустым'),
+    ),
+    pass: looseOptional(
+      z.string().nonempty('Название точки доступа не может быть пустым'),
+    ),
+    preferredCryptMethod: z.enum(cryptMethod, {
+      required_error: 'Required Error!',
+      invalid_type_error: 'Invalid Error!',
+    }),
+  })
+  .superRefine((values, context) => {
+    if (
+      values.preferredCryptMethod === 'WPA' ||
+      values.preferredCryptMethod === 'WEP'
+    ) {
+      context.addIssue({
+        code: z.ZodIssueCode.custom,
+        message: 'Пароль обязателен!',
+        path: ['pass'],
+      })
+    }
   })
 
-  const onSubmit = (data: formInputsType) => {
-    const wifiStr: wifiProps = {
-      ssid: data.ssid,
-      pass: data.pass,
-      crypt: data.crypt,
-      hidden: '',
-    }
+type FormFields = z.infer<typeof formSchema>
 
-    const wifiQrStr = wifiTemplateString(wifiStr)
-    console.log('wifi: ', wifiQrStr)
-    setQrCodeText(wifiQrStr)
-  }
+const WifiQr = () => {
+  const [qrCodeText, setQrCodeText] = useState('')
+  const {control, handleSubmit, watch, trigger, getValues} =
+    useForm<FormFields>({
+      mode: 'onBlur',
+      reValidateMode: 'onBlur',
+      resolver: zodResolver(formSchema),
+    })
 
-  const onSubmitHandler: SubmitHandler<formInputsType> = ({ssid, pass, crypt}) => {
-    const wifiStr: wifiProps = {
-      ssid,
-      pass,
-      crypt,
-      hidden: '',
-    }
+  useEffect(() => {
+    const subscription = watch((_value, {name}) => {
+      if (name === 'preferredCryptMethod') {
+        void trigger()
+      }
+    })
 
-    const wifiQrStr = wifiTemplateString(wifiStr)
-    console.log('wifi: ', wifiQrStr)
-    setQrCodeText(wifiQrStr)
-  }
-  console.log(errors)
+    return () => subscription.unsubscribe()
+  }, [watch, trigger])
 
   return (
     <>
@@ -86,42 +83,118 @@ const WifiQr = (props: Props) => {
         <Box
           component='form'
           autoComplete='off'
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit((data) => console.log('data: ', data))}
           noValidate
           sx={{mt: 0}}
         >
-          <TextField
-            sx={{mb: 2}}
-            label='Network Name'
-            fullWidth
-            required
-            error={!!errors['ssid']}
-            helperText={errors['ssid'] ? errors['ssid'].message : ''}
-            {...register('ssid')}
+          <Controller
+            name='ssid'
+            control={control}
+            render={({
+              field: {value, onChange, onBlur, ref},
+              fieldState: {error},
+            }) => (
+              <FormControl>
+                <TextField
+                  name='ssid'
+                  label='SSID'
+                  placeholder='wifi name'
+                  inputRef={ref}
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  error={Boolean(error)}
+                  required={true}
+                />
+                <FormHelperText
+                  sx={{
+                    color: 'error.main',
+                  }}
+                >
+                  {error?.message ?? ''}
+                </FormHelperText>
+              </FormControl>
+            )}
+          />
+          <Controller
+            name='pass'
+            control={control}
+            render={({
+              field: {value, onChange, onBlur, ref},
+              fieldState: {error},
+            }) => (
+              <FormControl>
+                <TextField
+                  name='pass'
+                  label='Password'
+                  placeholder='password'
+                  inputRef={ref}
+                  value={value}
+                  onChange={onChange}
+                  onBlur={onBlur}
+                  error={Boolean(error)}
+                  required={
+                    getValues('preferredCryptMethod') === 'WEP' ||
+                    getValues('preferredCryptMethod') === 'WPA'
+                  }
+                />
+                <FormHelperText
+                  sx={{
+                    color: 'error.main',
+                  }}
+                >
+                  {error?.message ?? ''}
+                </FormHelperText>
+              </FormControl>
+            )}
           />
 
-          <TextField
-            sx={{mb: 2}}
-            label='Password'
-            fullWidth
-            error={!!errors['pass']}
-            helperText={errors['pass'] ? errors['pass'].message : ''}
-            {...register('pass')}
+          <Controller
+            name='preferredCryptMethod'
+            control={control}
+            render={({
+              field: {value, onChange, onBlur, ref},
+              fieldState: {error},
+            }) => (
+              <FormControl>
+                <Autocomplete
+                  onChange={(
+                    _event: unknown,
+                    item: (typeof cryptMethod)[number] | null,
+                  ) => {
+                    onChange(item)
+                  }}
+                  value={value}
+                  options={cryptMethod}
+                  sx={{width: 245}}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      error={Boolean(error)}
+                      onBlur={onBlur}
+                      inputRef={ref}
+                      label={'Crypto Type'}
+                      defaultValue={cryptMethod[0]}
+                    />
+                  )}
+                />
+                <FormHelperText
+                  sx={{
+                    color: 'error.main',
+                  }}
+                >
+                  {error?.message ?? ''}
+                </FormHelperText>
+              </FormControl>
+            )}
           />
 
-          <FormControl sx={{pt: 2}}>
-            <FormLabel>Gender</FormLabel>
-            <RadioGroup {...register('crypt')} name='crypt' defaultValue={''}>
-              <FormControlLabel value='' control={<Radio />} label='None' />
-              <FormControlLabel value='WPA' control={<Radio />} label='WPA/WPA2' />
-              <FormControlLabel value='WEP' control={<Radio />} label='WEP' />
-            </RadioGroup>
-            <FormHelperText error={!!errors['crypt']}>
-              {errors['crypt'] ? errors['crypt'].message : ''}
-            </FormHelperText>
-          </FormControl>
-
-          <Button type='submit' fullWidth variant='contained' sx={{mt: 3, mb: 2}}>
+          <Button
+            type='submit'
+            fullWidth
+            variant='contained'
+            sx={{mt: 3, mb: 2}}
+          >
             Generate
           </Button>
         </Box>
