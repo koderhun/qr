@@ -41,7 +41,8 @@ const WifiQr = () => {
     event: React.MouseEvent<HTMLElement>,
     newWifiCryptMethod: string,
   ) => {
-    setWifiCryptMethodSelected(newWifiCryptMethod)
+    console.log('ttttt', newWifiCryptMethod)
+    if (newWifiCryptMethod) setWifiCryptMethodSelected(newWifiCryptMethod)
   }
 
   const methods = useForm<WifiInput>({
@@ -102,7 +103,9 @@ const WifiQr = () => {
               aria-label='Platform'
             >
               {wifiCryptMethodOptions.map((v) => (
-                <ToggleButton value={v.value}>{v.name}</ToggleButton>
+                <ToggleButton key={v.name} value={v.value}>
+                  {v.name}
+                </ToggleButton>
               ))}
             </ToggleButtonGroup>
 

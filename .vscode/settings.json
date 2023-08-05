@@ -16,7 +16,7 @@
   "cSpell.words": ["antd", "qrcode", "reduxjs"],
 
   // Использование одной темы в проекте)
-  "workbench.colorTheme": "Default Dark Modern",
+  "workbench.colorTheme": "Default Light+",
 
   // Подсветка комментариев с приставкой TODO
   "todohighlight.keywords": [
