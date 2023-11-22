@@ -1,0 +1,1 @@
+export {elementToImage} from './elementToImage'

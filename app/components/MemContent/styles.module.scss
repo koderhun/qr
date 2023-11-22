@@ -1,0 +1,14 @@
+.image {
+  img[src=''] {
+    display: none;
+  }
+
+  img {
+    min-width: 100%;
+  }
+}
+
+.content {
+  position: relative;
+  overflow: hidden;
+}
