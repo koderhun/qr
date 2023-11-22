@@ -9,7 +9,7 @@ dependencies:
     specifier: ^2.3.2
     version: 2.3.2
   flowbite:
-    specifier: ^2.1.1
+    specifier: ^2.2.0
     version: 2.2.0
   flowbite-react:
     specifier: ^0.6.4
@@ -32,19 +32,19 @@ dependencies:
 
 devDependencies:
   '@types/node':
-    specifier: ^20.9.0
+    specifier: ^20.9.4
     version: 20.9.4
   '@types/react':
-    specifier: ^18.2.37
+    specifier: ^18.2.38
     version: 18.2.38
   '@types/react-dom':
-    specifier: ^18.2.15
+    specifier: ^18.2.17
     version: 18.2.17
   autoprefixer:
     specifier: ^10.4.16
     version: 10.4.16(postcss@8.4.31)
   eslint:
-    specifier: ^8.53.0
+    specifier: ^8.54.0
     version: 8.54.0
   eslint-config-next:
     specifier: 14.0.2
@@ -59,7 +59,7 @@ devDependencies:
     specifier: ^3.3.5
     version: 3.3.5
   typescript:
-    specifier: ^5.2.2
+    specifier: ^5.3.2
     version: 5.3.2
 
 packages:
