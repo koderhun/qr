@@ -1,0 +1,46 @@
+{
+  "background_color": "#ffffff",
+  "categories": ["qrcode", "qr", "generator"],
+  "description": "QR Code Generator.",
+  "dir": "ltr",
+  "display": "standalone",
+  "iarc_rating_id": "",
+  "icons": [],
+  "lang": "en-US",
+  "name": "QRCode",
+  "orientation": "any",
+  "prefer_related_applications": false,
+  "related_applications": [
+    {
+      "platform": "webapp",
+      "url": "https://rtxrulez.github.io/qr"
+    }
+  ],
+  "scope": ".",
+  "screenshots": [
+    {
+      "sizes": "512x512",
+      "src": "static/images/icons/manifest-icon-512.png",
+      "type": "image/png"
+    }
+  ],
+  "short_name": "RS",
+  "shortcuts": [
+    {
+      "description": "React starter application.",
+      "icons": [
+        {
+          "purpose": "maskable any",
+          "sizes": "512x512",
+          "src": "static/images/icons/manifest-icon-512.png",
+          "type": "image/png"
+        }
+      ],
+      "name": "React Starter",
+      "short_name": "RS",
+      "url": "/"
+    }
+  ],
+  "start_url": ".",
+  "theme_color": "#ffffff"
+}
