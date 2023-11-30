@@ -16,22 +16,14 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
           />
-          <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="./pwa/apple-touch-icon.png"
-          />
-          <link rel="manifest" href="./pwa/site.webmanifest" />
-          <link
-            rel="mask-icon"
-            href="./pwa/safari-pinned-tab.svg"
-            color="#5bbad5"
-          />
+          <link rel="icon" href="favicon.ico" sizes="any" />
+          <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+          <link rel="apple-touch-icon" href="apple-touch-icon-180x180.png" />
+
           <meta name="apple-mobile-web-app-title" content="qr" />
           <meta name="application-name" content="qr" />
           <meta name="msapplication-TileColor" content="#00aba9" />
           <meta name="theme-color" content="#ffffff" />
-          <link rel="icon" type="image/png" href="./favicon.webp" />
         </head>
 
         <body suppressHydrationWarning={true}>
