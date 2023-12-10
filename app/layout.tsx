@@ -12,6 +12,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
     <>
       <html lang="ru">
         <head>
+          <title>QRCode Generator</title>
           <meta
             name="viewport"
             content="minimum-scale=1, initial-scale=1, width=device-width, shrink-to-fit=no, user-scalable=no, viewport-fit=cover"
@@ -44,7 +45,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
         <body suppressHydrationWarning={true}>
           <Header />
-          <main className="container mx-auto p-4">{children}</main>
+          <main className="container mx-auto pt-4 pb-4">{children}</main>
         </body>
       </html>
     </>

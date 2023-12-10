@@ -6,17 +6,17 @@ import {Navbar} from 'flowbite-react'
 
 export const Header = () => {
   return (
-    <Navbar fluid rounded>
+    <Navbar className="border-b-[1px]">
       <Navbar.Brand as={Link} href="https://flowbite-react.com">
         <Image
-          src="/favicon.png"
+          src="/logo.png"
           width={34.95}
           height={36}
           className="mr-3 h-6 sm:h-9"
-          alt="Flowbite React Logo"
+          alt="QR Code Generator Logo"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
-          Flowbite React
+          QRCode Generator
         </span>
       </Navbar.Brand>
       <Navbar.Toggle />
