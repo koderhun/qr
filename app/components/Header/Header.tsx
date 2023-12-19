@@ -7,7 +7,7 @@ import {Navbar} from 'flowbite-react'
 export const Header = () => {
   return (
     <Navbar className="border-b-[1px]">
-      <Navbar.Brand as={Link} href="https://flowbite-react.com">
+      <Navbar.Brand as={Link} href="/">
         <Image
           src="/logo.png"
           width={34.95}

@@ -23,10 +23,6 @@ export const Generator: FC<GeneratorProps> = (props) => {
     <div
       className={cn(s.Generator, 'container mx-auto grid-cols-2 grid')}
       {...props}>
-      <div className="flex align-middle justify-center">
-        <CanvasQr text={text} />
-        <div className="clear-both"></div>
-      </div>
       <div>
         <FormProvider {...methods}>
           <h2 className="mb-4">Генерация QR из текста</h2>
@@ -46,6 +42,10 @@ export const Generator: FC<GeneratorProps> = (props) => {
             Generation
           </Button>
         </FormProvider>
+      </div>
+      <div className="flex align-middle justify-center">
+        <CanvasQr text={text} />
+        <div className="clear-both"></div>
       </div>
     </div>
   )
