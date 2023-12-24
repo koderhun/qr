@@ -9,16 +9,18 @@
     "generate-pwa-assets": "pwa-assets-generator"
   },
   "dependencies": {
+    "@types/dom-to-image": "^2.6.7",
     "classnames": "^2.3.2",
+    "dom-to-image-more": "^3.2.0",
     "flowbite": "^2.2.0",
     "flowbite-react": "^0.6.4",
     "next": "14.0.2",
     "next-pwa": "^5.6.0",
-    "qrcode.react": "^3.1.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-draggable": "^4.4.6",
-    "react-hook-form": "^7.49.0"
+    "react-hook-form": "^7.49.0",
+    "react-qr-code": "^2.0.12"
   },
   "devDependencies": {
     "@types/node": "^20.9.4",
