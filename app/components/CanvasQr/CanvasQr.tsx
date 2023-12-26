@@ -10,13 +10,15 @@ import s from './styles.module.scss'
 
 const DefaultQR = () => {
   return (
-    <Image
-      src="/logo.svg"
-      width={340}
-      height={360}
-      className=""
-      alt="QR Code Generator Logo"
-    />
+    <div className={s.default}>
+      <Image
+        src="/logo.svg"
+        width={340}
+        height={360}
+        className=""
+        alt="QR Code Generator Logo"
+      />
+    </div>
   )
 }
 
@@ -41,11 +43,10 @@ const VisibleQR: FC<CanvasQrProps> = ({text}) => {
             }}
           />
         </div>
-
-        <Button onClick={handleDownload} color="purple">
-          Скачать
-        </Button>
       </div>
+      <Button onClick={handleDownload} color="purple">
+        Download
+      </Button>
     </>
   )
 }

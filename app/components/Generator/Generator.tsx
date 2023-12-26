@@ -2,7 +2,7 @@
 import {FC, useState} from 'react'
 import {Controller, FormProvider, useForm} from 'react-hook-form'
 
-import {Button, Checkbox, Label, TextInput} from 'flowbite-react'
+import {Button, Card, Label, TextInput} from 'flowbite-react'
 import {GeneratorProps} from './Generator.props'
 import cn from 'classnames'
 import s from './styles.module.scss'
@@ -21,11 +21,17 @@ export const Generator: FC<GeneratorProps> = (props) => {
 
   return (
     <div className={cn('mx-auto grid-cols-2 grid', s.Generator)} {...props}>
-      <div className="p-4 border-r-2">
+      <div className={cn('pr-4', s.form)}>
+        <Card className="max-w-sm">
+          <Button color="light" href="/generator/text">
+            Text
+          </Button>
+        </Card>
+      </div>
+      <form className={cn('pr-4', s.form)}>
         <FormProvider {...methods}>
-          <h2 className="mb-4">Генерация QR из текста</h2>
           <div className="mb-2 block">
-            <Label htmlFor="text" value="Text for qr code" />
+            <Label htmlFor="text" value="Text:" />
           </div>
 
           <Controller
@@ -37,11 +43,11 @@ export const Generator: FC<GeneratorProps> = (props) => {
           />
 
           <Button className="mt-4" onClick={handleSubmit(onSave)} type="submit">
-            Generation
+            Generate
           </Button>
         </FormProvider>
-      </div>
-      <div className={'grid place-content-center'}>
+      </form>
+      <div className={'pl-4 pb-4'}>
         <CanvasQr text={text} />
       </div>
     </div>

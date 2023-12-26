@@ -45,7 +45,7 @@ export default function RootLayout({children}: {children: React.ReactNode}) {
 
         <body suppressHydrationWarning={true}>
           <Header />
-          <main className="container mx-auto pt-4 pb-4">{children}</main>
+          <main className="container mx-auto p-4">{children}</main>
         </body>
       </html>
     </>

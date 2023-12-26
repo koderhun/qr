@@ -12,7 +12,7 @@ export const Header = () => {
           src="/logo.png"
           width={34.95}
           height={36}
-          className="mr-3 h-6 sm:h-9"
+          className="mr-3 ml-1 sm:ml-3"
           alt="QR Code Generator Logo"
         />
         <span className="self-center whitespace-nowrap text-xl font-semibold dark:text-white">
@@ -20,9 +20,9 @@ export const Header = () => {
         </span>
       </Navbar.Brand>
       <Navbar.Toggle />
-      <Navbar.Collapse>
+      <Navbar.Collapse className={'pr-0 sm:pr-4'}>
         <Navbar.Link href="/scanner">Scanner</Navbar.Link>
-        <Navbar.Link as={Link} href="/generator">
+        <Navbar.Link as={Link} href="/">
           Generator
         </Navbar.Link>
       </Navbar.Collapse>

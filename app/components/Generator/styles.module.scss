@@ -1,3 +1,15 @@
 .Generator {
-  border: 1px solid var(--border-color);
+}
+
+.form {
+  position: relative;
+  &::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    border-right: 1px solid var(--border-color);
+    top: -1rem;
+    bottom: 0;
+    height: calc(100vh - 57px);
+  }
 }
