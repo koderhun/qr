@@ -1,5 +1,6 @@
 'use client'
 import React from 'react'
-export default function GeneratorPage() {
+import {LayoutForm} from '@/components'
+export default function TextPage() {
   return <div>okkkk</div>
 }
